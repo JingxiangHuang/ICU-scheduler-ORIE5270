@@ -9,7 +9,6 @@ We build tiny MIMIC-IV-shaped CSVs in a temp dir and verify:
 
 from __future__ import annotations
 
-import gzip
 import json
 import time
 from pathlib import Path

@@ -1,7 +1,5 @@
 """Smoke tests for icu_scheduler.plotting — verify PNGs get created."""
 
-from pathlib import Path
-
 import numpy as np
 
 from icu_scheduler.plotting import plot_occupancy_bands, plot_policy_comparison

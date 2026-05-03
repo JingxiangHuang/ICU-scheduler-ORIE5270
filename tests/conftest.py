@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine
 
 
 @pytest.fixture

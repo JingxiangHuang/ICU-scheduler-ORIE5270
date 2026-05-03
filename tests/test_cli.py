@@ -3,9 +3,6 @@
 Uses ``click.testing.CliRunner`` to invoke the CLI in-process.
 """
 
-from pathlib import Path
-
-import pytest
 from click.testing import CliRunner
 
 from icu_scheduler.cli import main

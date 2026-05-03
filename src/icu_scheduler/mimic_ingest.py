@@ -29,12 +29,10 @@ but isn't needed for the current course project.
 
 from __future__ import annotations
 
-import gzip
-import hashlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Iterator, List, Optional, Tuple
+from typing import Dict, Iterator, Optional, Tuple
 
 import pandas as pd
 from sqlalchemy import create_engine, text

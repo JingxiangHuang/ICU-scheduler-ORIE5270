@@ -7,7 +7,10 @@ to depend on matplotlib.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Dict, List
+from typing import TYPE_CHECKING, Dict, List
+
+if TYPE_CHECKING:
+    import pandas as pd
 
 import matplotlib
 

@@ -1,0 +1,84 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "icu_scheduler"
+version = "0.1.0"
+description = "ICU resource-allocation optimization toolkit on MIMIC-IV."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Your Name", email = "hjx986234675@gmail.com" }
+]
+keywords = ["MIMIC-IV", "ICU", "healthcare", "scheduling", "optimization"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scipy>=1.10",
+    "scikit-learn>=1.3",
+    "matplotlib>=3.7",
+    "sqlalchemy>=2.0",
+    "click>=8.1",
+    "tqdm>=4.65",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "pytest-mock>=3.11",
+    "black>=23.9",
+    "flake8>=6.1",
+    "mypy>=1.5",
+    "sphinx>=7.2",
+    "sphinx-rtd-theme>=1.3",
+]
+
+[project.scripts]
+icu-scheduler = "icu_scheduler.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/yourname/icu_scheduler"
+Repository = "https://github.com/yourname/icu_scheduler"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-ra --strict-markers"
+markers = ["slow: marks tests as slow"]
+
+[tool.coverage.run]
+source = ["src/icu_scheduler"]
+branch = true
+omit = ["*/cli.py", "*/__main__.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true

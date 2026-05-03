@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-log.txt
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+
+# Sphinx
+docs/_build/
+docs/_autosummary/
+docs/api/_autosummary/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Project-specific
+reports/
+data/mimic-*/
+data/raw/
+data/interim/
+.icu_scheduler_cache*
+*.sqlite-journal
+*.log
+
+# Keep project data instructions and bundled sample data
+!data/README.md
+!data/sample/
+!data/sample/mimic_demo.sqlite

@@ -38,7 +38,6 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
 
-
 # ---------- Public constants --------------------------------------------------
 
 REQUIRED_TABLES: Tuple[str, ...] = ("admissions", "icustays")
@@ -138,8 +137,7 @@ def discover_mimic_files(mimic_dir: Path) -> DiscoveredFiles:
         path = _find_table_file(mimic_dir, table)
         if path is None:
             searched = ", ".join(
-                str(mimic_dir / sub) if sub else str(mimic_dir)
-                for sub in _SEARCH_SUBDIRS
+                str(mimic_dir / sub) if sub else str(mimic_dir) for sub in _SEARCH_SUBDIRS
             )
             raise FileNotFoundError(
                 f"Could not find {table}.csv or {table}.csv.gz under "

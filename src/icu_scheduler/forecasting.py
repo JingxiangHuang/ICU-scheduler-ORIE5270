@@ -48,10 +48,7 @@ class HistoricalArrivalForecaster:
             return cls({}, {}, default_los_hours=24.0)
 
         span_hours = max(
-            (
-                event_list[-1].arrival_time - event_list[0].arrival_time
-            ).total_seconds()
-            / 3600.0,
+            (event_list[-1].arrival_time - event_list[0].arrival_time).total_seconds() / 3600.0,
             1.0,
         )
         counts: Dict[str, int] = defaultdict(int)
@@ -65,9 +62,7 @@ class HistoricalArrivalForecaster:
         all_los = [event.los_hours for event in event_list if event.los_hours > 0]
         default_los = float(np.median(all_los)) if all_los else 24.0
         return cls(
-            rates_per_hour={
-                acuity: count / span_hours for acuity, count in counts.items()
-            },
+            rates_per_hour={acuity: count / span_hours for acuity, count in counts.items()},
             los_hours_by_acuity={
                 acuity: float(np.median(values)) if values else default_los
                 for acuity, values in los_values.items()

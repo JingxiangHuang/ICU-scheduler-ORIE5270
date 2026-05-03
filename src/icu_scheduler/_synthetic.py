@@ -71,7 +71,8 @@ def build_synthetic_db(
             "first_careunit": careunit,
             "last_careunit": careunit,
             "intime": admittime + pd.to_timedelta(1.0, unit="h"),
-            "outtime": admittime + pd.to_timedelta(1.0, unit="h")
+            "outtime": admittime
+            + pd.to_timedelta(1.0, unit="h")
             + pd.to_timedelta(los_days, unit="D"),
             "los": los_days,
         }

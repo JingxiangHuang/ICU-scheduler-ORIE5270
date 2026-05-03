@@ -76,25 +76,16 @@ class TestThresholdPolicy:
 
     def test_emergency_admits_when_any_bed_free(self):
         p = ThresholdPolicy(n_beds=20, reserve=2)
-        assert (
-            p.decide(_event("emergency"), ICUState(20, occupied=19))
-            == AdmissionDecision.ADMIT
-        )
+        assert p.decide(_event("emergency"), ICUState(20, occupied=19)) == AdmissionDecision.ADMIT
 
     def test_elective_diverted_within_reserve(self):
         p = ThresholdPolicy(n_beds=20, reserve=2)
         # 2 beds free = inside the reserve → elective diverts
-        assert (
-            p.decide(_event("elective"), ICUState(20, occupied=18))
-            == AdmissionDecision.DIVERT
-        )
+        assert p.decide(_event("elective"), ICUState(20, occupied=18)) == AdmissionDecision.DIVERT
 
     def test_elective_admits_above_reserve(self):
         p = ThresholdPolicy(n_beds=20, reserve=2)
-        assert (
-            p.decide(_event("elective"), ICUState(20, occupied=10))
-            == AdmissionDecision.ADMIT
-        )
+        assert p.decide(_event("elective"), ICUState(20, occupied=10)) == AdmissionDecision.ADMIT
 
     def test_emergency_boards_when_full(self):
         p = ThresholdPolicy(n_beds=20, reserve=2, max_board=3)
@@ -123,24 +114,15 @@ class TestAdaptiveThresholdPolicy:
 
     def test_emergency_admits_even_inside_adaptive_reserve(self):
         p = AdaptiveThresholdPolicy(n_beds=10)
-        assert (
-            p.decide(_event("urgent"), ICUState(10, occupied=9))
-            == AdmissionDecision.ADMIT
-        )
+        assert p.decide(_event("urgent"), ICUState(10, occupied=9)) == AdmissionDecision.ADMIT
 
     def test_elective_admits_when_free_beds_exceed_adaptive_reserve(self):
         p = AdaptiveThresholdPolicy(n_beds=10)
-        assert (
-            p.decide(_event("elective"), ICUState(10, occupied=8))
-            == AdmissionDecision.ADMIT
-        )
+        assert p.decide(_event("elective"), ICUState(10, occupied=8)) == AdmissionDecision.ADMIT
 
     def test_elective_diverts_when_inside_adaptive_reserve(self):
         p = AdaptiveThresholdPolicy(n_beds=10)
-        assert (
-            p.decide(_event("elective"), ICUState(10, occupied=9))
-            == AdmissionDecision.DIVERT
-        )
+        assert p.decide(_event("elective"), ICUState(10, occupied=9)) == AdmissionDecision.DIVERT
 
     def test_boards_then_diverts_when_full(self):
         p = AdaptiveThresholdPolicy(n_beds=10, max_board=2)

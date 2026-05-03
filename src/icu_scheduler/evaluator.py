@@ -94,9 +94,7 @@ def compute_kpis(
     if not results_list:
         raise ValueError("results must be non-empty")
 
-    total = sum(
-        r.n_admitted + r.n_boarded + r.n_diverted for r in results_list
-    )
+    total = sum(r.n_admitted + r.n_boarded + r.n_diverted for r in results_list)
     # Avoid division-by-zero on empty simulations.
     denom = float(total) if total > 0 else 1.0
 
@@ -106,15 +104,11 @@ def compute_kpis(
     denom_elective = float(total_elective) if total_elective > 0 else 1.0
 
     return KPISummary(
-        mean_utilization=float(
-            np.mean([r.mean_utilization for r in results_list])
-        ),
+        mean_utilization=float(np.mean([r.mean_utilization for r in results_list])),
         p95_utilization=float(
             np.percentile(
                 [
-                    float(r.utilization_series.max())
-                    if r.utilization_series.size > 0
-                    else 0.0
+                    float(r.utilization_series.max()) if r.utilization_series.size > 0 else 0.0
                     for r in results_list
                 ],
                 95,
@@ -126,13 +120,9 @@ def compute_kpis(
         max_occupancy=float(np.mean([r.max_occupancy for r in results_list])),
         urgent_admit_rate=sum(r.n_urgent_admitted for r in results_list) / denom_urgent,
         elective_admit_rate=sum(r.n_elective_admitted for r in results_list) / denom_elective,
-        mean_boarding_hours=float(
-            np.mean([r.mean_boarding_hours for r in results_list])
-        ),
+        mean_boarding_hours=float(np.mean([r.mean_boarding_hours for r in results_list])),
         transfer_rate=sum(r.n_transferred for r in results_list) / denom,
-        clinical_cost_per_arrival=sum(
-            simulation_cost(r, weights) for r in results_list
-        ) / denom,
+        clinical_cost_per_arrival=sum(simulation_cost(r, weights) for r in results_list) / denom,
     )
 
 

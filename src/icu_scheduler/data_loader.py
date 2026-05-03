@@ -22,7 +22,6 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
 
-
 # ---------- SQL queries -------------------------------------------------------
 
 ICU_STAYS_QUERY = """

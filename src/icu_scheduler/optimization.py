@@ -20,7 +20,6 @@ from scipy.optimize import Bounds, LinearConstraint, milp
 from icu_scheduler.scheduler import AdmissionDecision, AllocationPolicy, ICUState
 from icu_scheduler.stream import ArrivalEvent, ArrivalStream
 
-
 URGENT_ACUITIES = {"emergency", "urgent"}
 
 
@@ -240,9 +239,7 @@ class RollingHorizonILPPolicy(AllocationPolicy):
         self.forecaster = forecaster
         self.allow_step_down = allow_step_down
         self.max_transfer_remaining_hours = float(max_transfer_remaining_hours)
-        self.transferable_acuities = tuple(
-            acuity.lower() for acuity in transferable_acuities
-        )
+        self.transferable_acuities = tuple(acuity.lower() for acuity in transferable_acuities)
 
     def decide(self, event: ArrivalEvent, state: ICUState) -> str:
         """Fallback used if a simulator does not provide rolling context."""
@@ -304,11 +301,7 @@ class RollingHorizonILPPolicy(AllocationPolicy):
             len(usable_releases) > queue_position
             and usable_releases[queue_position] <= self.max_board_wait_hours
         )
-        if (
-            state.free <= 0
-            and state.board_queue_size < self.max_board
-            and release_soon
-        ):
+        if state.free <= 0 and state.board_queue_size < self.max_board and release_soon:
             return AdmissionDecision.BOARD
         return AdmissionDecision.DIVERT
 
@@ -431,11 +424,7 @@ def _capacity_constraints(
 ) -> Optional[LinearConstraint]:
     existing_iter = [] if existing_release_offsets is None else existing_release_offsets
     existing = np.asarray(
-        [
-            float(offset)
-            for offset in existing_iter
-            if float(offset) > 0
-        ],
+        [float(offset) for offset in existing_iter if float(offset) > 0],
         dtype=float,
     )
     endpoints = np.unique(np.concatenate([starts, ends, np.asarray([0.0]), existing]))
@@ -443,9 +432,7 @@ def _capacity_constraints(
         return None
 
     intervals = [
-        (left + right) / 2.0
-        for left, right in zip(endpoints[:-1], endpoints[1:])
-        if right > left
+        (left + right) / 2.0 for left, right in zip(endpoints[:-1], endpoints[1:]) if right > left
     ]
     if not intervals:
         return None

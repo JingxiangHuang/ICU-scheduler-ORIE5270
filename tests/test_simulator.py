@@ -29,15 +29,11 @@ def _tiny_stream(n: int = 10) -> ArrivalStream:
 class TestMonteCarloSimulatorValidation:
     def test_n_runs_must_be_positive(self):
         with pytest.raises(ValueError):
-            MonteCarloSimulator(
-                FCFSPolicy(), _tiny_stream(), n_runs=0, n_workers=1
-            )
+            MonteCarloSimulator(FCFSPolicy(), _tiny_stream(), n_runs=0, n_workers=1)
 
     def test_n_workers_must_be_positive(self):
         with pytest.raises(ValueError):
-            MonteCarloSimulator(
-                FCFSPolicy(), _tiny_stream(), n_runs=1, n_workers=0
-            )
+            MonteCarloSimulator(FCFSPolicy(), _tiny_stream(), n_runs=1, n_workers=0)
 
 
 class TestSimulationResult:

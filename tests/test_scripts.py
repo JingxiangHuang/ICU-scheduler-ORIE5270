@@ -14,7 +14,6 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_PATH = PROJECT_ROOT / "scripts" / "run_real_mimic.py"
 STRESS_SCRIPT_PATH = PROJECT_ROOT / "scripts" / "stress_sweep.py"
@@ -56,13 +55,15 @@ def test_compress_timeline_monotonic_and_capped():
     mod = _load_module()
     # Two arrivals 100 years apart; after compression the gap should be
     # clipped to at most 72h.
-    df = pd.DataFrame({
-        "subject_id": [1, 2],
-        "intime": [pd.Timestamp("2100-01-01"), pd.Timestamp("2200-01-01")],
-        "los": [1.0, 1.0],
-        "first_careunit": ["MICU", "MICU"],
-        "admission_type": ["EW EMER.", "ELECTIVE"],
-    })
+    df = pd.DataFrame(
+        {
+            "subject_id": [1, 2],
+            "intime": [pd.Timestamp("2100-01-01"), pd.Timestamp("2200-01-01")],
+            "los": [1.0, 1.0],
+            "first_careunit": ["MICU", "MICU"],
+            "admission_type": ["EW EMER.", "ELECTIVE"],
+        }
+    )
     out = mod._compress_timeline(df)
     gap_hours = (out["intime"].iloc[1] - out["intime"].iloc[0]).total_seconds() / 3600
     assert gap_hours <= 72.1

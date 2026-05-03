@@ -25,53 +25,83 @@ from icu_scheduler.mimic_ingest import (
     ingest_mimic_dir,
 )
 
-
 # ---------- fixtures ----------------------------------------------------------
 
 
 ADMISSIONS_COLS = [
-    "subject_id", "hadm_id", "admittime", "dischtime",
-    "admission_type", "admission_location", "discharge_location",
+    "subject_id",
+    "hadm_id",
+    "admittime",
+    "dischtime",
+    "admission_type",
+    "admission_location",
+    "discharge_location",
     "hospital_expire_flag",
 ]
 ICUSTAYS_COLS = [
-    "subject_id", "hadm_id", "stay_id", "first_careunit", "last_careunit",
-    "intime", "outtime", "los",
+    "subject_id",
+    "hadm_id",
+    "stay_id",
+    "first_careunit",
+    "last_careunit",
+    "intime",
+    "outtime",
+    "los",
 ]
 
 
 def _fake_admissions() -> pd.DataFrame:
-    return pd.DataFrame([
-        {
-            "subject_id": 1, "hadm_id": 10,
-            "admittime": "2180-01-01 08:00:00", "dischtime": "2180-01-05 10:00:00",
-            "admission_type": "EW EMER.", "admission_location": "EMERGENCY ROOM",
-            "discharge_location": "HOME", "hospital_expire_flag": 0,
-        },
-        {
-            "subject_id": 2, "hadm_id": 20,
-            "admittime": "2180-01-02 12:00:00", "dischtime": "2180-01-04 09:00:00",
-            "admission_type": "ELECTIVE", "admission_location": "CLINIC",
-            "discharge_location": "HOME", "hospital_expire_flag": 0,
-        },
-    ])
+    return pd.DataFrame(
+        [
+            {
+                "subject_id": 1,
+                "hadm_id": 10,
+                "admittime": "2180-01-01 08:00:00",
+                "dischtime": "2180-01-05 10:00:00",
+                "admission_type": "EW EMER.",
+                "admission_location": "EMERGENCY ROOM",
+                "discharge_location": "HOME",
+                "hospital_expire_flag": 0,
+            },
+            {
+                "subject_id": 2,
+                "hadm_id": 20,
+                "admittime": "2180-01-02 12:00:00",
+                "dischtime": "2180-01-04 09:00:00",
+                "admission_type": "ELECTIVE",
+                "admission_location": "CLINIC",
+                "discharge_location": "HOME",
+                "hospital_expire_flag": 0,
+            },
+        ]
+    )
 
 
 def _fake_icustays() -> pd.DataFrame:
-    return pd.DataFrame([
-        {
-            "subject_id": 1, "hadm_id": 10, "stay_id": 100,
-            "first_careunit": "MICU", "last_careunit": "MICU",
-            "intime": "2180-01-01 09:00:00", "outtime": "2180-01-03 09:00:00",
-            "los": 2.0,
-        },
-        {
-            "subject_id": 2, "hadm_id": 20, "stay_id": 200,
-            "first_careunit": "SICU", "last_careunit": "SICU",
-            "intime": "2180-01-02 14:00:00", "outtime": "2180-01-03 18:00:00",
-            "los": 1.1667,
-        },
-    ])
+    return pd.DataFrame(
+        [
+            {
+                "subject_id": 1,
+                "hadm_id": 10,
+                "stay_id": 100,
+                "first_careunit": "MICU",
+                "last_careunit": "MICU",
+                "intime": "2180-01-01 09:00:00",
+                "outtime": "2180-01-03 09:00:00",
+                "los": 2.0,
+            },
+            {
+                "subject_id": 2,
+                "hadm_id": 20,
+                "stay_id": 200,
+                "first_careunit": "SICU",
+                "last_careunit": "SICU",
+                "intime": "2180-01-02 14:00:00",
+                "outtime": "2180-01-03 18:00:00",
+                "los": 1.1667,
+            },
+        ]
+    )
 
 
 def _write_csv(df: pd.DataFrame, path: Path, gzipped: bool) -> None:
@@ -155,6 +185,7 @@ def test_ingest_subdir_layout_gz(tmp_path: Path) -> None:
 
     # Downstream loader should work on this cache.
     from icu_scheduler.data_loader import load_joined_cohort
+
     cohort = load_joined_cohort(cache)
     assert len(cohort) == 2
     assert {"admission_type", "first_careunit", "intime", "los"}.issubset(cohort.columns)

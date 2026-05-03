@@ -17,7 +17,6 @@ from typing import Iterable, Iterator, List, Optional
 import numpy as np
 import pandas as pd
 
-
 # ---------- Arrival stream ----------------------------------------------------
 
 

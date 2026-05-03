@@ -13,7 +13,6 @@ from icu_scheduler.stream import (
     reservoir_sample,
 )
 
-
 # ---------- ArrivalStream -----------------------------------------------------
 
 
@@ -22,9 +21,7 @@ class TestArrivalStream:
         df = pd.DataFrame(
             {
                 "subject_id": [1, 2, 3],
-                "intime": pd.to_datetime(
-                    ["2180-01-01", "2180-01-02", "2180-01-03"]
-                ),
+                "intime": pd.to_datetime(["2180-01-01", "2180-01-02", "2180-01-03"]),
                 "los": [24.0, 48.0, 12.0],
                 "admission_type": ["EMERGENCY", "ELECTIVE", "URGENT"],
             }

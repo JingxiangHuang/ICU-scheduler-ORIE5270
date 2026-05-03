@@ -111,9 +111,7 @@ class MonteCarloSimulator:
                     If DIVERT: record.
             4. Return :class:`SimulationResult`.
         """
-        rng = np.random.default_rng(
-            None if self.seed is None else self.seed + run_id
-        )
+        rng = np.random.default_rng(None if self.seed is None else self.seed + run_id)
         events = list(self.stream)
         if not events:
             return SimulationResult(
@@ -202,9 +200,7 @@ class MonteCarloSimulator:
                 else:
                     n_elective_admitted += 1
             elif decision == AdmissionDecision.TRANSFER:
-                max_remaining = getattr(
-                    self.policy, "max_transfer_remaining_hours", 24.0
-                )
+                max_remaining = getattr(self.policy, "max_transfer_remaining_hours", 24.0)
                 transferable = getattr(
                     self.policy,
                     "transferable_acuities",

@@ -78,9 +78,12 @@ def _resolve_db(
     3. **Auto-discovery under** ``./data/`` — if the user has unzipped a MIMIC
        dataset into ``data/`` (or a common subfolder) we find it and ingest it
        with no flags required.
+    4. ``data/sample/mimic_demo.sqlite`` — bundled sample DB, used as a
+       zero-config fallback so a fresh clone can run the demo without any
+       flags or downloaded data.
 
-    If no MIMIC-shaped dataset is found under ``./data/``, fail loudly instead
-    of silently falling back to sample or synthetic data.
+    If none of the above are available, fail loudly instead of silently
+    falling back to synthetic data.
     """
     from icu_scheduler.mimic_ingest import ingest_mimic_dir
 
@@ -100,6 +103,11 @@ def _resolve_db(
         cache = ingest_mimic_dir(discovered, force=force_reingest)
         click.echo(f"[icu-scheduler] SQLite cache ready at {cache}")
         return cache
+
+    sample_db = Path("data/sample/mimic_demo.sqlite")
+    if sample_db.exists():
+        click.echo(f"[icu-scheduler] Using bundled sample DB at: {sample_db}")
+        return sample_db
 
     data_root = Path("data")
     if not data_root.exists():
